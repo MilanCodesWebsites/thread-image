@@ -8,14 +8,14 @@ interface ResultsSectionProps {
 }
 
 const ResultsSection: React.FC<ResultsSectionProps> = ({ data }) => {
-  const handleDownloadPostImage = () => {
+  const handleDownloadPostImage = async () => {
     const filename = getImageFilename(data.image_post_url, 'threads-post');
-    downloadImage(data.image_post_url, filename);
+    await downloadImage(data.image_post_url, filename);
   };
 
-  const handleDownloadProfileImage = () => {
+  const handleDownloadProfileImage = async () => {
     const filename = getImageFilename(data.profile_image_url, 'threads-profile');
-    downloadImage(data.profile_image_url, filename);
+    await downloadImage(data.profile_image_url, filename);
   };
 
   return (
@@ -28,7 +28,8 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ data }) => {
               <img
                 src={data.profile_image_url}
                 alt={`${data.username}'s profile`}
-                className="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-gray-600 object-cover"
+                className="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-gray-600 object-cover cursor-pointer hover:opacity-80 transition-opacity"
+                onClick={handleDownloadProfileImage}
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.username)}&background=000000&color=fff`;
@@ -61,7 +62,8 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ data }) => {
               <img
                 src={data.image_post_url}
                 alt="Post content"
-                className="w-full rounded-lg border border-gray-200 dark:border-gray-600 shadow-sm max-h-96 object-cover"
+                className="w-full rounded-lg border border-gray-200 dark:border-gray-600 shadow-sm max-h-96 object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                onClick={handleDownloadPostImage}
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
@@ -75,8 +77,8 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ data }) => {
             {data.image_post_url && (
               <button
                 onClick={handleDownloadPostImage}
-                className="flex-1 bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-100 text-white dark:text-black font-semibold py-3 px-4 rounded-lg
-                         transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-black/50 dark:focus:ring-white/50
+                className="flex-1 bg-gray-900 dark:bg-gray-100 hover:bg-black dark:hover:bg-white text-white dark:text-gray-900 font-semibold py-3 px-4 rounded-lg
+                         transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-900/50 dark:focus:ring-gray-100/50
                          hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2"
               >
                 <Download className="w-5 h-5" />
@@ -88,8 +90,8 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ data }) => {
             {data.profile_image_url && (
               <button
                 onClick={handleDownloadProfileImage}
-                className="flex-1 bg-gray-100 dark:bg-gray-700 border-2 border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black
-                         font-semibold py-3 px-4 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-black/50 dark:focus:ring-white/50
+                className="flex-1 bg-gray-100 dark:bg-gray-700 border-2 border-gray-900 dark:border-gray-100 text-gray-900 dark:text-gray-100 hover:bg-gray-900 dark:hover:bg-gray-100 hover:text-white dark:hover:text-gray-900
+                         font-semibold py-3 px-4 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-900/50 dark:focus:ring-gray-100/50
                          hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center space-x-2"
               >
                 <Download className="w-5 h-5" />
