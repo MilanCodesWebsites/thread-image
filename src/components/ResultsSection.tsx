@@ -18,6 +18,14 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ data }) => {
     await downloadImage(data.profile_image_url, filename);
   };
 
+  // Clean username to ensure only one @ symbol
+  const cleanUsername = (username: string): string => {
+    // Remove all @ symbols and then add exactly one
+    return username.replace(/@/g, '');
+  };
+
+  const displayUsername = cleanUsername(data.username);
+
   return (
     <div className="w-full max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden animate-fade-in">
@@ -27,18 +35,18 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ data }) => {
             <div className="relative">
               <img
                 src={data.profile_image_url}
-                alt={`${data.username}'s profile`}
+                alt={`${displayUsername}'s profile`}
                 className="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-gray-600 object-cover cursor-pointer hover:opacity-80 transition-opacity"
                 onClick={handleDownloadProfileImage}
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.username)}&background=000000&color=fff`;
+                  target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayUsername)}&background=000000&color=fff`;
                 }}
               />
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="text-lg font-semibold text-black dark:text-white truncate">
-                @{data.username}
+                @{displayUsername}
               </h3>
               <p className="text-gray-600 dark:text-gray-300 text-sm">
                 Threads User
