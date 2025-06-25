@@ -36,10 +36,10 @@ function App() {
     <>
       <LoadingScreen isVisible={showLoadingScreen} theme={theme} />
       
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300 font-manrope flex flex-col">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300 font-manrope pb-24">
         <Header />
         
-        <main className="flex-1 py-8 sm:py-12 pb-4">
+        <main className="py-8 sm:py-12">
           <InputSection onSubmit={handleSubmit} loading={loading} />
           
           <div className="mt-8">
